@@ -2,6 +2,22 @@
 
 include "../database.php";
 
+	function checkIfChamDiemRoi($sinhvien,$hocky,$canbo,$db){
+		$sql = "select count(*) from phieudanhgiasinhvien where phieu_cbhd='$canbo' and phieu_sv='$sinhvien' and phieu_hocky='$hocky'";
+		$do = mysqli_query($db,$sql);
+		$hk = mysqli_fetch_array($do);
+		return $hk[0];
+	}
+
+	function getNextIDValueByTable($tablename,$db){
+		$sql2 = "SELECT `auto_increment` FROM INFORMATION_SCHEMA.TABLES WHERE table_name='$tablename'";
+		$do=mysqli_query($db,$sql2);
+		$x = mysqli_fetch_array($do);
+		$nextID = $x[0];
+		return $nextID;
+	}
+
+
 	function sdfdsf($username,$db){
 		$sql = "select cq_id from coquan where cq_username='$username'";
 		$do = mysqli_query($db,$sql);
@@ -23,8 +39,14 @@ include "../database.php";
 		return $hk['hk_hocky']."/".$hk['hk_namhoc'];
 	}
 
+	function getMyNoiDung($db,$me,$hockyhientai){
+		$sql = "select nd_id from noidungthuctap where hk_id=$hockyhientai and nguoihuongdan='$me'";
+		$do = mysqli_query($db,$sql);
+		$a = mysqli_fetch_array($do);
+		return $a['nd_id'];
+	}
 	function checkNeuChuaTaoNoiDungThucTap($canbo,$hockyhientai,$db){
-		$sql = "select count(*) from noidungthuctap where nguoihuongdan='$canbo' and hk_id=$hockygannhat";
+		$sql = "select count(*) from noidungthuctap where nguoihuongdan='$canbo' and hk_id=$hockyhientai";
 		$do = mysqli_query($db,$sql);
 		$x = mysqli_fetch_array($do);
 		if($x[0] > 0){
@@ -34,6 +56,8 @@ include "../database.php";
 		}
 	}
 
+	$x= checkNeuChuaTaoNoiDungThucTap('fpt_lethi',2,$db);
+	echo $x;
 	
 
 ?>

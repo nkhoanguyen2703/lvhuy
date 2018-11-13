@@ -33,7 +33,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             
-                            <div class="text-center" style="padding-bottom: 1px;">Hệ thống quản lý đoàn khách</div>
+                            <div class="text-center" style="padding-bottom: 1px;">Hệ thống quản lý thực tập</div>
                             <div class="text-center" style="padding-top: 2px;">Dành cho cán bộ hướng dẫn
                            
                             </div>

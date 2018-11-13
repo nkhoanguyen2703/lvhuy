@@ -56,7 +56,7 @@
 
 if(isset($_POST['btn_captaikhoan'])){
 
-	$pwd = $_POST['pwd'];
+	$pwd = $_POST['pass'];
 	$pwd = md5($pwd);
 	$ten = $_POST['ten'];
 

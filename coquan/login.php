@@ -76,10 +76,11 @@ if(isset($_POST['btnlogin'])){
     $pass=$_POST['txtpass'];
     $pass=md5($pass);
 
-    $sql="select * from coquan where cq_username='$id' and cq_password='$pass'";
+    $sql="select count(*) from coquan where cq_username='$id' and cq_password='$pass'";
 
     $x=mysqli_query($db,$sql);
-    $count=mysqli_num_rows($x);
+    $x2=mysqli_fetch_array($x);
+    $count = $x2[0];
 
     if($count>0){ //successful
 
@@ -87,7 +88,7 @@ if(isset($_POST['btnlogin'])){
         // header('Location: ?keyad=add_food.php');
         echo "<script>window.location='index.php';</script>";
     }else{
-        echo "<script>alert('Thất bại');window.location='index.php';</script>";
+        echo "<script>alert('$sql');window.location='index.php';</script>";
         
     }
 }

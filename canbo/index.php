@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <!-- Theme Made By www.w3schools.com - No Copyright -->
-  <title>Quản lý thực tập - cán bộ hướng dẫn </title>
+  <title>Quản lý thực tập - cán bộ CTU </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -40,39 +40,41 @@ session_start();
 
 <div class="container">
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" style="bottom:0;margin-bottom: 0px;">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.php">QLTT</a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">QLTT</a>
     </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="index.php">Home</a></li>
-      <li><a href="?keycbhd=danhsachsinhvien.php">Danh sách sinh viên</a></li>
-      <li><a href="#">Page 2</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-     <!--  <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
-      <li><a href="index.php?logoutcbhd=1"><span class="glyphicon glyphicon-log-in"></span> Đăng xuất</a></li>
-    </ul>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="index.php">Trang chủ</a></li>
+        <li><a href="">AAAA</a></li>
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="?signout_canbo=1"><span class="glyphicon glyphicon-log-in"></span> Thoát</a></li>
+      </ul>
+    </div>
   </div>
 </nav>
 
 <?php
 error_reporting(E_ERROR | E_PARSE); //hide Warning message
 
-
-
 $file="login.php";
 
-if(isset($_SESSION['cbhd'])){
+if(isset($_SESSION['canbo'])){
     $file="homepage.php";
-    if(isset($_GET['keycbhd'])){
-        $file=$_GET['keycbhd'];
+    if(isset($_GET['keycb'])){
+        $file=$_GET['keycb'];
     }
-    $cbhd = $_SESSION['cbhd']; //for easy to use
+    $canbo = $_SESSION['canbo']; //for easy to use
     $hockyhientai = getLatestHOCKY($db);
-    //lay noi dung ID cua session dang quan ly trong HK moi nhat
-    $ndid = getMyNoiDung($db,$cbhd,$hockyhientai);
 }
 include $file;
 
@@ -80,8 +82,8 @@ include $file;
 
 
 
-if(isset($_GET['logoutcbhd'])){
-    unset($_SESSION['cbhd']);
+if(isset($_GET['signout_canbo'])){
+    unset($_SESSION['canbo']);
     echo "<script>window.location='index.php';</script>";
 }
 

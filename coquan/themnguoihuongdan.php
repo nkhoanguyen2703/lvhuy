@@ -78,12 +78,12 @@
 		$sdt = $_POST['sdt'];
 		$mail = $_POST['email'];
 		$coquanID = getCoQuanIDByUsername($coquan,$db);
-		$sql = "insert into nguoihuongdan values('','$username','$pwd','$ten',$gt,'$hv',$sdt,'$mail',$coquanID)";
+		$sql = "insert into nguoihuongdan values('$username','$pwd','$ten',$gt,'$hv',$sdt,'$mail',$coquanID)";
 		$do = mysqli_query($db,$sql);
 		if($do){
 			echo "<script>alert('Đã thêm');window.location='index.php';</script>";
 		}else{
-			echo "<script>alert('Lỗi xảy ra 009xx');</script>";
+			echo "<script>alert('Username đã tồn tại');</script>";
 		}
 	}
 

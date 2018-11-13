@@ -7,7 +7,7 @@
 	<div class="well">
 		<h3>Tạo nội dung thực tập mới</h3><hr>
 		
-
+	
 
 		<form action="" method="POST">
 			<div class="form-group">
@@ -79,6 +79,8 @@
 		$sobuoi = $_POST['sobuoi'];
 		$maytinh = 0;
 		$phonglamviec = 0;
+		$manganh = $_POST['nganh'];
+		
 		if(isset($_POST['maytinh'])){
 			$maytinh = 1;
 		}

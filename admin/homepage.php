@@ -43,7 +43,7 @@
   <div class="col-md-10">
   		<div class="panel panel-default">
 		  <div class="panel-body">
-		  	<h3>Danh sách cơ quan chờ duyệt</h3>
+		  	<h3>Danh sách cơ quan mới chờ duyệt</h3>
 		  	
 		  	<input class="form-control" id="myInput" type="text" placeholder="Search..">
 			  <br>

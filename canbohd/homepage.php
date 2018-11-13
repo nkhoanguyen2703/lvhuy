@@ -9,8 +9,8 @@
 	  		$tenhk = getTenHK($hockygannhat,$db);
 	  		echo $tenhk;
 
-	  		$check = checkNeuChuaTaoNoiDungThucTap('$cbhd',$hockygannhat,$db);
-	  		echo "HELLO: ".$check;
+	  		$check = checkNeuChuaTaoNoiDungThucTap($cbhd,$hockygannhat,$db);
+
 	  		if($check == 0){
 	  			echo "<br><a href='?keycbhd=taonoidungthuctap.php&hk=$hockygannhat'>Tạo nội dung thực tập</a>";
 	  		}else{
@@ -44,36 +44,39 @@
   <div class="col-md-6">
   		<div class="panel panel-default">
 		  <div class="panel-body">
-		  	<h3>Chưa bố trí</h3>
+		  	<h3>Duyệt đăng ký sinh viên</h3>
 		  	
 		  	<input class="form-control" id="myInput" type="text" placeholder="Search..">
 			  <br>
 			  <table class="table table-bordered table-striped">
 			    <thead>
 			      <tr>
-			        <th>Tên cơ quan</th>
-			        <th>Địa chỉ</th>
-			        <th>Email</th>
-			        <th>Sdt</th>
-			        <th>MST</th>
+			        <th>Tên SV</th>
+			        <th>Giới tính</th>
+			        <th>Ngay sinh</th>
+			        <th>Ngành</th>
 			        <th>Duyệt</th>
+			        <th>Từ chối</th>
 			      </tr>
 			    </thead>
 			    <tbody id="myTable">
 			    	<?php 
-			    	$sql = "select * from coquan where cq_trangthai=0";
+			    	
+			    	$sql = "select * from phieudangky a join sinhvien b 
+			    	on a.pdk_sinhvien=b.sv_mssv where a.pdk_noidungthuctap=$ndid and a.pdk_trangthai=0";
+			    	
 			    	$do = mysqli_query($db,$sql);
-			    	while($cq = mysqli_fetch_array($do)){
-			    		$id=$cq['cq_id'];
+			    	while($sv = mysqli_fetch_array($do)){
+			    		$mssv = $sv['sv_mssv'];
 			    	 ?>
 			    	
 			      <tr>
-			        <td><?=$cq['cq_ten']?></td>
-			        <td><?=$cq['cq_diachi']?></td>
-			        <td><?=$cq['cq_email']?></td>
-			        <td><?=$cq['cq_sdt']?></td>
-			        <td><?=$cq['cq_masothue']?></td>
-			        <td><a href="?keyad=duyetcoquan.php&cq=<?=$id?>">Duyệt</a></td>
+			        <td><?=$sv['sv_hoten']?></td>
+			        <td><?=$sv['sv_gioitinh']?></td>
+			        <td><?=$sv['sv_ngaysinh']?></td>
+			        <td><?=$sv['sv_manganh']?></td>
+			        <td><a href="index.php?duyetsv=<?=$mssv?>&noidungid=<?=$ndid?>">Duyệt</a>
+			        <td><a href="index.php?tuchoisv=<?=$mssv?>&noidungid=<?=$ndid?>">Từ chối</a></td>
 			      </tr>
 			      <?php } ?>
 
@@ -99,25 +102,32 @@
 
 
 <?php  
-	if(isset($_POST['btn_denghicoquan'])){
-		$ten = $_POST['tencoquan'];
-		$dc = $_POST['diachi'];
-		$sdt = $_POST['sdt'];
-		$email = $_POST['email'];
-		$mst = $_POST['mst'];
-
-		$sql = "insert into coquan values('','$ten','','','$dc',$sdt,'$email',$mst,0)";
-		
+	if(isset($_GET['tuchoisv'])){
+		$sv = $_GET['tuchoisv'];
+		$nd = $_GET['noidungid'];
+		$sql = "DELETE FROM phieudangky where pdk_noidungthuctap=$nd AND pdk_sinhvien='$sv'";
 		$do = mysqli_query($db,$sql);
 		if($do){
-			echo "<script>alert('Đã gửi yêu cầu, sinh viên vui lòng chờ được duyệt!');window.location='index.php';</script>";
+			echo "<script>alert('Đã từ chối');window.location='index.php';</script>";
 		}else{
-			echo "<script>alert('Lỗi gửi yêu cầu cơ quan 001xx');</script>";
+			echo "<script>alert('Chưa được');window.location='index.php';</script>";
+		}
+
+	}
+
+	if(isset($_GET['duyetsv'])){
+		$sv = $_GET['duyetsv'];
+		$nd = $_GET['noidungid'];
+		$sql = "UPDATE phieudangky SET pdk_trangthai=1 WHERE pdk_noidungthuctap=$nd AND pdk_sinhvien='$sv'";
+		$do = mysqli_query($db,$sql);
+		if($do){
+			echo "<script>alert('Đã duyệt');window.location='index.php';</script>";
+		}else{
+			echo "<script>alert('Chưa duyệt được');window.location='index.php';</script>";
 		}
 	}
 
 ?>
-
 
 
 
